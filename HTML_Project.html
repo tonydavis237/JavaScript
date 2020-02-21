@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<link rel="stylesheet" href="ProjectStyle.css">
+	<title>Customer Information</title>
+
+	<script>
+
+		var divs = [ "errorFirstname", "errorLastname", "errorEmail",];
+
+		function validate()
+		{
+			var info = [];
+			info[0] = document.getElementById("first").value;
+			info[1] = document.getElementById("last").value;
+			info[2] = document.getElementById("email").value;
+
+			var errors = [];
+			errors[0] = "<span style='color:red'> Enter your first name!</span>"
+			errors[1] = "<span style='color:red'> Enter your last name!</span>"
+			errors[2] = "<span style='color:red'> Enter your email address!</span>"
+
+			var count;
+
+			for (count=0; count<info.length; count++)
+			{
+				var errorMessage = errors[count];
+				var entry = divs[count];
+
+				if (info[count] == "")
+				
+					document.getElementById(entry).innerHTML = errorMessage;
+
+				else if (count == 2)
+				{
+					var atpos = info[count].indexOf("@");  
+					var dotpos = info[count].lastIndexOf("."); 
+
+					
+					if (atpos < 1 || dotpos < atpos + 2 || dotpos >= info[count].length)
+
+						document.getElementById(entry).innerHTML = "<span style = 'color:red' > Please enter a valid email address!</span>";
+
+					else
+
+						document.getElementById(entry).innerHTML = "OK!";
+				}
+
+				else
+
+					document.getElementById(entry).innerHTML = "OK!";
+			}
+
+		}
+
+		function finalValidate()
+		{
+			var count;
+
+			var flag = 1;
+
+			for (count=0; count<divs.length; count++)
+			{
+				if (document.getElementById(divs[count]).innerHTML != "OK!")
+
+					flag = 0;
+			}
+
+			if (flag == 1) 
+
+				document.getElementById("errorFinal").innerHTML = "All the data you entered is correct :)"
+		}
+
+	</script>
+
+</head>
+
+<body>
+
+	<table>
+
+		<tr>
+			<td> First Name:</td>
+			<td><input type="text" id="first" onkeyup="validate();"/></td>
+			<td><div id="errorFirstname"></div></td>
+		</tr>
+		<tr>
+			<td> Last Name:</td>
+			<td><input type="text" id="last" onkeyup="validate();"/></td>
+			<td><div id="errorLastname"></div></td>
+		</tr>
+		<tr>
+			<td> Email:</td>
+			<td><input type="text" id="email" onkeyup="validate();"/></td>
+			<td><div id="errorEmail"></div></td>
+		</tr>
+		<tr>
+			<td><input type="button" id="create" value="Create" onclick="validate();finalValidate();"/></td>
+			<td><div id="errorFinal"></div></td>
+		</tr>
+	</table>
+</body>
+</html>
